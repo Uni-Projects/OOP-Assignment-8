@@ -93,12 +93,27 @@ public class Polynomial {
 
 
     public void minus(Polynomial b) {
+        Polynomial b2 = new Polynomial(b);
+        Polynomial c = new Polynomial("-1 0");
+        b2.times(c);
+        this.plus(b2);
     }
-
 
     public void times(Polynomial b) {
+        Polynomial c = new Polynomial (); 
+        Iterator <Term> i = this.terms.iterator();
+        while(i.hasNext()){
+            Term c1 = i.next();
+            Iterator <Term> i2 = b.terms.iterator();
+            while(i2.hasNext()){
+                Term c2 = i2.next();
+                Term temp = new Term(c1);
+                temp.times(c2);
+                c.terms.add(temp); 
+            }
+        }
+        this.terms = c.terms;
     }
-
     public void divide(Polynomial b) {
     }
 
