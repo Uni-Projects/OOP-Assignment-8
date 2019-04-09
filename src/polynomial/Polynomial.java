@@ -113,13 +113,27 @@ public class Polynomial {
             }
         }
         this.terms = c.terms;
+        Collections.sort(terms);
     }
+    
     public void divide(Polynomial b) {
     }
-
+    public void evaluate (int x){
+        int res=0;
+        Iterator<Term> i = terms.iterator();
+        while (i.hasNext()){
+            Term temp = i.next();
+            res += temp.evaluate(x);
+        }
+        System.out.println (res);
+    }
     @Override
     public boolean equals(Object other_poly) {
-        return false;
+        for(Term t : this.terms){
+            if(!t.equals(other_poly))
+                return false;
+        }
+        return true;
     }
 
 }
