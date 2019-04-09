@@ -13,11 +13,15 @@ public class Main {
         Polynomial p2 = new Polynomial( "4 0 5 3" );
         Polynomial p3 = new Polynomial( "4 0 -5 3" );
         Polynomial p4 = new Polynomial( "6 1 4 4 4 0" );
-        p1.plus(p4);
+        
         System.out.println( p1);
         System.out.println( p2 );
         System.out.println( p3 );
         System.out.println( p4 );
+        
+        p1.minus(p3);
+        System.out.println( p1);
+        
    }
 
 }
