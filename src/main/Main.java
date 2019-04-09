@@ -20,6 +20,7 @@ public class Main {
         System.out.println( p4 );
         
         p1.minus(p3);
+        p1.evaluate(2);
         System.out.println( p1);
         
    }
