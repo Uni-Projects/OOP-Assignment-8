@@ -64,6 +64,9 @@ public class Term implements Comparable<Term> {
              coefficient += t.coefficient;
         
     }
+    public double evaluate(int x){
+        return (Math.pow((double)x, (double)exponent))*coefficient;
+    }
 
     /**
      * For multiplying two terms
