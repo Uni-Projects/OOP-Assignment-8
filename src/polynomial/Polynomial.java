@@ -87,7 +87,13 @@ public class Polynomial {
                 }
             }
         }
+        
+        Iterator <Term> i3 = this.terms.iterator();
         this.terms.addAll(c.terms);
+        while(i3.hasNext()){
+            if(i3.next().getCoef() == 0)
+                i3.remove();  
+        }
         Collections.sort(terms);
     }
 
@@ -114,8 +120,24 @@ public class Polynomial {
         }
         this.terms = c.terms;
         Collections.sort(terms);
+        this.reduce();
     }
-    
+    public void reduce(){
+        Iterator <Term> i = this.terms.iterator();
+        while(i.hasNext()){
+            Term c1 = i.next();
+            Iterator <Term> i2 = i;
+            while(i2.hasNext()){
+                Term c2 = i2.next();
+                if(c1.getExp() == c2.getExp()){
+                  c1.plus(c2);
+                  i2.remove();
+                }
+            }
+        }
+            
+        
+    }
     public void divide(Polynomial b) {
     }
     public void evaluate (int x){
