@@ -61,11 +61,12 @@ public class Term implements Comparable<Term> {
      * @require exponent == t.exponent
      */
     public void plus(Term t) {
-             coefficient += t.coefficient;
-        
+        coefficient += t.coefficient;
+
     }
-    public double evaluate(int x){
-        return (Math.pow((double)x, (double)exponent))*coefficient;
+
+    public double evaluate(int x) {
+        return (Math.pow((double) x, (double) exponent)) * coefficient;
     }
 
     /**
