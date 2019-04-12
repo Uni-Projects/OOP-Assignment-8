@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Iterator;
 import java.util.Collections;
+import java.util.ListIterator;
 
 /**
  * A skeleton class for representing Polynomials
@@ -74,68 +75,69 @@ public class Polynomial {
     }
 
     public void plus(Polynomial b) {
-        Polynomial c = new Polynomial (b); 
-        Iterator <Term> i = this.terms.iterator();
-        while(i.hasNext()){
-            Term c1 = i.next();
-            Iterator <Term> i2 = c.terms.iterator();
-            while(i2.hasNext()){
-                Term c2 = i2.next();
-                if (c1.getExp() == c2.getExp()){
-                     c1.plus(c2);
-                     i2.remove();
+        Polynomial copy = new Polynomial (b); 
+        Iterator <Term> thisIter = this.terms.iterator();
+        while(thisIter.hasNext()){
+            Term cur = thisIter.next();
+            Iterator <Term> copyIter = copy.terms.iterator();
+            while(copyIter.hasNext()){
+                Term cur2 = copyIter.next();
+                if (cur.getExp() == cur2.getExp()){
+                     cur.plus(cur2);
+                     copyIter.remove();
                 }
             }
+            if (cur.getCoef() == 0)
+                thisIter.remove();
         }
-        
-        Iterator <Term> i3 = this.terms.iterator();
-        this.terms.addAll(c.terms);
-        while(i3.hasNext()){
-            if(i3.next().getCoef() == 0)
-                i3.remove();  
-        }
+        this.terms.addAll(copy.terms);
         Collections.sort(terms);
     }
 
-
     public void minus(Polynomial b) {
-        Polynomial b2 = new Polynomial(b);
-        Polynomial c = new Polynomial("-1 0");
-        b2.times(c);
-        this.plus(b2);
+        Polynomial copy = new Polynomial(b);
+        Polynomial minus = new Polynomial("-1 0");
+        copy.times(minus);
+        this.plus(copy);
     }
 
     public void times(Polynomial b) {
-        Polynomial c = new Polynomial (); 
-        Iterator <Term> i = this.terms.iterator();
-        while(i.hasNext()){
-            Term c1 = i.next();
-            Iterator <Term> i2 = b.terms.iterator();
-            while(i2.hasNext()){
-                Term c2 = i2.next();
-                Term temp = new Term(c1);
-                temp.times(c2);
-                c.terms.add(temp); 
-            }
+        Polynomial res = new Polynomial (); 
+        for(Term t : this.terms){
+            Polynomial temp = termTimes(t,b);
+            res.plus(temp);
         }
-        this.terms = c.terms;
-        Collections.sort(terms);
-    }    
+        this.terms = res.terms;
+    } 
+    
+    public Polynomial termTimes (Term a ,Polynomial b){
+        Polynomial copy = new Polynomial (b);
+        ListIterator<Term> i = copy.terms.listIterator();
+        while(i.hasNext()){      
+            Term next = i.next();
+            next.times(a);
+            i.set(next); 
+        }
+        return copy;
+    }
     
     public void divide(Polynomial b) {
     }
+    
     public void evaluate (int x){
-        int res=0;
+        double res = 0;
         Iterator<Term> i = terms.iterator();
         while (i.hasNext()){
-            Term temp = i.next();
-            res += temp.evaluate(x);
+            //Term temp = i.next();
+            res += i.next().evaluate(x);
         }
         System.out.println (res);
     }
+    
     @Override
     public boolean equals(Object other_poly) {
-        if(other_poly != null && other_poly.getClass() == this.getClass()){
+        
+        if(other_poly != null && other_poly.getClass() == this.getClass()){     
             Polynomial p = (Polynomial)other_poly;
             Iterator<Term> i = p.terms.listIterator();
             Iterator<Term> i2 = this.terms.listIterator();
@@ -148,8 +150,4 @@ public class Polynomial {
         }else 
             return false;    
     }
-        
-        
-    
-
 }
