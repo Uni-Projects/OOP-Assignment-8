@@ -43,8 +43,8 @@ public class PolynomialTest {
     @Test
     public void testToString() {
         System.out.println("toString");
-        Polynomial instance = new Polynomial();
-        String expResult = "";
+        Polynomial instance = new Polynomial("3 1 2 3");
+        String expResult = "3x + 2x^3";
         String result = instance.toString();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
