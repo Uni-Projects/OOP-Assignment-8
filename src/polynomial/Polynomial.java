@@ -120,24 +120,8 @@ public class Polynomial {
         }
         this.terms = c.terms;
         Collections.sort(terms);
-        this.reduce();
-    }
-    public void reduce(){
-        Iterator <Term> i = this.terms.iterator();
-        while(i.hasNext()){
-            Term c1 = i.next();
-            Iterator <Term> i2 = i;
-            while(i2.hasNext()){
-                Term c2 = i2.next();
-                if(c1.getExp() == c2.getExp()){
-                  c1.plus(c2);
-                  i2.remove();
-                }
-            }
-        }
-            
-        
-    }
+    }    
+    
     public void divide(Polynomial b) {
     }
     public void evaluate (int x){
@@ -151,11 +135,21 @@ public class Polynomial {
     }
     @Override
     public boolean equals(Object other_poly) {
-        for(Term t : this.terms){
-            if(!t.equals(other_poly))
-                return false;
-        }
-        return true;
+        if(other_poly != null && other_poly.getClass() == this.getClass()){
+            Polynomial p = (Polynomial)other_poly;
+            Iterator<Term> i = p.terms.listIterator();
+            Iterator<Term> i2 = this.terms.listIterator();
+            while(i.hasNext()){
+                if(!i.next().equals(i2.next())){
+                    return false;
+                }
+            }
+            return true;
+        }else 
+            return false;    
     }
+        
+        
+    
 
 }
